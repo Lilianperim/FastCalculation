@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.fragment.app.Fragment
 import br.edu.scl.ifsp.sdm.fastcalculation.Extras.EXTRA_SETTINGS
 import br.edu.scl.ifsp.sdm.fastcalculation.databinding.FragmentGameBinding
 
@@ -92,17 +92,10 @@ class GameFragment : Fragment() {
             startRoundTime = System.currentTimeMillis()
             roundDeadLineHandler.sendEmptyMessageDelayed(MSG_ROUND_DEADLINE, settings.roundInterval)
         } else {
-            with(fragmentGameBinding) {
-                roundTv.text = getString(R.string.points)
-                val points = hits * 10f / (totalGameTime / 1000L)
-                "%.1f".format(points).also {
-                    questionTv.text = it
-                }
-                alternativeOneBt.visibility = View.GONE
-                alternativeTwoBt.visibility = View.GONE
-                alternativeThreeBt.visibility = View.GONE
-
-            }
+            val points = hits * 10f / (totalGameTime / 1000L)
+            settings.points = "%.1f".format(points)
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.gameFl, ResultFragment.newInstance(settings)).commit()
         }
     }
 }
