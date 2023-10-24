@@ -35,7 +35,7 @@ class WelcomeFragment : Fragment() {
         "${getString(R.string.welcome)},${settings.playerName}!".also {
             fragmentWelcomeBinding.welcomeTv.text = it
         }
-        fragmentWelcomeBinding.welcomeTv.text= "Welcome, !${settings.playerName}"
+        fragmentWelcomeBinding.welcomeTv.text= "Welcome, ${settings.playerName}!"
         fragmentWelcomeBinding.playerBt.setOnClickListener{
             (context as OnPlayGame).onPlayGame()
         }
